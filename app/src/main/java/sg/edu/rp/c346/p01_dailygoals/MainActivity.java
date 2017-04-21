@@ -1,6 +1,8 @@
 package sg.edu.rp.c346.p01_dailygoals;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import static android.R.id.edit;
 import static sg.edu.rp.c346.p01_dailygoals.R.id.rg3;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,8 +61,58 @@ public class MainActivity extends AppCompatActivity {
                 // Start the new activity
                 startActivity(i);
 
+
+
+
+
+
+
+                //open Shared Preference
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                //create a edit Shared Preference
+                SharedPreferences.Editor edwin = prefs.edit();
+                edwin.putInt("rg1", selectedButtonId1);
+                edwin.putInt("rg2", selectedButtonId2);
+                edwin.putInt("rg3", selectedButtonId3);
+                edwin.putString("et", etMutiline.getText().toString());
+                //commit to save change
+                edwin.commit();
+
+
+
             }
         });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        //retrieve data
+
+        int selectedButton1 = prefs.getInt("rg1", 0);
+        int selectedButton2 = prefs.getInt("rg2", 1);
+        int selectedButton3 = prefs.getInt("rg3", 2);
+        String editText = prefs.getString("et","");
+
+        //Update UI Element
+        RadioGroup rg1 = (RadioGroup) findViewById(R.id.rg1);
+        rg1.check(selectedButton1);
+        RadioGroup rg2 = (RadioGroup) findViewById(R.id.rg2);
+        rg2.check(selectedButton2);
+        RadioGroup rg3 = (RadioGroup) findViewById(R.id.rg3);
+        rg3.check(selectedButton3);
+
+        EditText et = (EditText) findViewById(R.id.MultilineText);
+        et.setText(editText);
+
+
+
+
+
+
 
 
     }
