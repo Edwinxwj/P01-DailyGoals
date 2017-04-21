@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">P01-DailyGoals</string>
+    <string name="textview">TextView</string>
+</resources>
